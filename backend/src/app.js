@@ -11,6 +11,9 @@ const categoryRoutes = require('./routes/categoryRoutes');
 const vendorRoutes = require('./routes/vendorRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 
+const mongoose = require('mongoose');
+const { connectDB } = require('./config/db');
+
 const app = express();
 
 // Middlewares
@@ -23,6 +26,18 @@ app.use(
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Ensure database connection for requests (serverless/fluid compute readiness)
+app.use(async (req, res, next) => {
+  if (mongoose.connection.readyState < 1) {
+    try {
+      await connectDB();
+    } catch (err) {
+      console.error('[DB] Automatic connection error:', err);
+    }
+  }
+  next();
+});
 
 // Basic Request Logger in non-test mode
 if (process.env.NODE_ENV !== 'test') {

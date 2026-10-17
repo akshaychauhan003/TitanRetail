@@ -2,7 +2,25 @@
  * Frontend API Client with JWT Authorization & Centralized Error Handling
  */
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || (typeof window !== 'undefined' ? '/api' : 'http://127.0.0.1:48291/api');
+/**
+ * Resolves the API base URL dynamically.
+ * - In browser: uses relative '/api' (routed to backend via Vercel rewrites) or NEXT_PUBLIC_API_URL.
+ * - In server functions/SSR: uses Vercel service binding BACKEND_URL (process.env.BACKEND_URL)
+ *   with fallback to NEXT_PUBLIC_API_URL or local backend port.
+ */
+export function getApiBase(): string {
+  if (typeof window !== 'undefined') {
+    return process.env.NEXT_PUBLIC_API_URL || '/api';
+  }
+  if (process.env.BACKEND_URL) {
+    try {
+      return new URL('/api', process.env.BACKEND_URL).toString().replace(/\/$/, '');
+    } catch {
+      return `${process.env.BACKEND_URL.replace(/\/$/, '')}/api`;
+    }
+  }
+  return process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:48291/api';
+}
 
 export function getToken(): string | null {
   if (typeof window === 'undefined') return null;
@@ -49,7 +67,7 @@ async function request<T = any>(endpoint: string, options: RequestInit = {}): Pr
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const url = `${API_BASE}${endpoint}`;
+  const url = `${getApiBase()}${endpoint}`;
 
   try {
     const res = await fetch(url, {
@@ -190,7 +208,7 @@ export const api = {
     getDownloadCsvUrl: (params: Record<string, any> = {}) => {
       const token = getToken();
       const qs = new URLSearchParams({ ...params, token: token || '' }).toString();
-      return `${API_BASE}/reports/sales/csv?${qs}`;
+      return `${getApiBase()}/reports/sales/csv?${qs}`;
     },
   },
 

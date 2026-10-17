@@ -8,17 +8,20 @@ This guide walks you through deploying your full-stack web application completel
 
 ```mermaid
 graph LR
-    User[Browser / Customer / Staff] -->|HTTPS| Frontend[Vercel: Next.js Frontend]
-    Frontend -->|REST API with JWT| Backend[Render: Express.js Backend API]
+    User[Browser / Customer / Staff] -->|Single Domain HTTPS| Vercel[Vercel: Unified Multi-Service Project]
+    subgraph Vercel ["Vercel Single Deployment"]
+      Frontend[frontend: Next.js Service /]
+      Backend[backend: Express.js Service /api]
+      Frontend -.->|Internal Service Binding BACKEND_URL| Backend
+    end
     Backend -->|Mongoose Driver| DB[(MongoDB Atlas Cloud: M0 Free Cluster)]
 ```
 
-| Component | Platform | Free Tier Benefits |
+| Component | Platform | Configuration |
 | :--- | :--- | :--- |
-| **Database** | [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) | 512 MB Free Cloud Storage (Never expires, automated backups) |
-| **Backend API** | [Render](https://render.com) | Free Web Service (Node.js runtime, automated SSL/TLS certificates) |
-| **Frontend Web App** | [Vercel](https://vercel.com) | Free Hobby Plan (Global Edge CDN, automatic Next.js optimizations) |
-| **Code Repository** | [GitHub](https://github.com) | Free public/private repository hosting & CI/CD triggers |
+| **Database** | [MongoDB Atlas](https://www.mongodb.com/cloud/atlas) | M0 Free Cloud Cluster (`retail_inventory`) |
+| **Full Stack App (Frontend + Backend)** | [Vercel](https://vercel.com) | Multi-Service Project via `vercel.json` (Express + Next.js) |
+| **Code Repository** | [GitHub](https://github.com) | Monorepo root hosting both services |
 
 ---
 
@@ -111,61 +114,40 @@ git push -u origin main
 
 ---
 
-## Phase 3: Deploy Backend API on Render
+## Phase 3: Deploy Unified Full Stack App on Vercel (Multi-Services)
 
-Render will host your Express.js REST API with automatic HTTPS.
+With [`vercel.json`](file:///Users/akshaysinghchauhan/Documents/projects/Web%20Titan/vercel.json) in your project root, Vercel builds and runs both your Express.js backend and Next.js frontend together as a single project under one public domain.
 
-### Step 3.1: Create Web Service on Render
-1. Log in to the [Render Dashboard](https://dashboard.render.com).
-2. Click **New +** at the top right and select **Web Service**.
-3. Choose **Build and deploy from a Git repository**.
-4. Select your `titan-retail-system` repository (grant Render access if needed).
+### Step 3.1: Import Project into Vercel
+1. Log in to your [Vercel Dashboard](https://vercel.com).
+2. Click **Add New... > Project**.
+3. Select your GitHub repository (`TitanRetail` or `titan-retail-system`) and click **Import**.
 
-### Step 3.2: Configure Web Service Settings
-Fill in the deployment settings carefully:
+### Step 3.2: Configure Project Settings
+1. **Framework Preset**: In **Build and Deployment Settings**, select **Services** (or leave as auto-detected from `vercel.json`).
+2. **Root Directory**: Leave as `./` (the repository root).
 
-| Setting | Value | Why it matters |
-| :--- | :--- | :--- |
-| **Name** | `titan-retail-api` (or custom name) | Determines your API URL (`https://titan-retail-api.onrender.com`) |
-| **Region** | Choose closest to your MongoDB region | Lower latency between API and MongoDB |
-| **Branch** | `main` | Production branch |
-| **Root Directory** | `backend` | **CRITICAL**: Tells Render your backend code is inside `/backend` |
-| **Runtime** | `Node` | Node.js environment |
-| **Build Command** | `npm install` | Installs backend dependencies |
-| **Start Command** | `npm start` | Runs `node src/server.js` |
-| **Instance Type** | `Free` | $0/month free tier |
-
-### Step 3.3: Set Environment Variables
-Scroll down to **Environment Variables** and add the following keys:
+### Step 3.3: Set Environment Variables in Vercel
+Expand the **Environment Variables** section on Vercel and add:
 
 | Key | Value | Description |
 | :--- | :--- | :--- |
-| `NODE_ENV` | `production` | Enables production mode |
-| `MONGODB_URI` | `mongodb+srv://titan_admin:...` | Your MongoDB Atlas connection URI from Phase 1 |
-| `JWT_SECRET` | `titan_production_secret_key_84920491024_secure` | Secret string used to sign authentication tokens |
+| `MONGODB_URI` | `mongodb+srv://akshaysinghchauhan003_db_user:MZngCeyz0OX0QDEy@cluster0.k3gratv.mongodb.net/retail_inventory?retryWrites=true&w=majority` | Your live MongoDB Atlas URI |
+| `JWT_SECRET` | `titan_retail_jwt_secret_key_2026_secure` | Secret string for signing auth tokens |
+| `NODE_ENV` | `production` | Production mode |
 
-> [!TIP]
-> You do **not** need to manually define `PORT`; Render assigns a dynamic port automatically, which `src/server.js` reads via `process.env.PORT`.
+> [!NOTE]
+> You do **not** need to set `NEXT_PUBLIC_API_URL` or `BACKEND_URL`. Vercel automatically injects the `BACKEND_URL` service binding and routes all public `/api/*` requests directly to your backend service!
 
-### Step 3.4: Deploy & Verify Backend Health
-1. Click **Create Web Service**.
-2. Render will build and deploy your app. Watch the live deployment logs.
-3. You should see:
-   ```text
-   [DB] Attempting connection to configured MONGODB_URI...
-   [DB] Connected successfully to MongoDB at cluster0.xxxx.mongodb.net
-   [Seed] Seeding initial database records...
-   [Seed] Created default users:
-          Store Manager: storemanager / admin123
-          Admin: admin@titan.com / admin123
-          Staff: staff@titan.com / staff123
-   [Server] API running on http://localhost:...
-   ```
-4. Copy your backend service URL from the top of the Render page:
-   `https://titan-retail-api.onrender.com`
-5. Test it in your browser:
-   Visit `https://titan-retail-api.onrender.com/api/health`
-   You should receive:
+### Step 3.4: Deploy & Verify
+1. Click **Deploy**.
+2. Vercel will build both services in parallel:
+   - `backend`: Express.js API
+   - `frontend`: Next.js Web App
+3. Once the deployment finishes, you get a single public URL (e.g., `https://titan-retail-system.vercel.app`).
+4. **Verify Health Endpoint**:
+   Visit `https://<your-project>.vercel.app/api/health` in your browser.
+   You will receive:
    ```json
    {
      "status": "healthy",
@@ -173,35 +155,6 @@ Scroll down to **Environment Variables** and add the following keys:
      "service": "TITAN Retail Inventory & Sales Management System API"
    }
    ```
-
----
-
-## Phase 4: Deploy Frontend Web App on Vercel
-
-Vercel will build and serve your Next.js application at global edge speeds.
-
-### Step 4.1: Import Project into Vercel
-1. Log in to [Vercel](https://vercel.com).
-2. From your Vercel Dashboard, click **Add New... > Project**.
-3. Locate your `titan-retail-system` GitHub repository and click **Import**.
-
-### Step 4.2: Configure Root Directory
-1. In the **Configure Project** screen, find **Root Directory**.
-2. Click **Edit** next to `./`.
-3. Select the `frontend` folder and click **Continue**.
-
-### Step 4.3: Add Environment Variables
-Expand the **Environment Variables** section and add:
-
-| Key | Value | Notes |
-| :--- | :--- | :--- |
-| `NEXT_PUBLIC_API_URL` | `https://titan-retail-api.onrender.com/api` | **Must include `/api` at the end and use HTTPS** |
-
-### Step 4.4: Deploy
-1. Click **Deploy**.
-2. Vercel will install dependencies and compile the Next.js production build (`next build`).
-3. Once complete, you will be greeted with confetti and your live URL:
-   `https://titan-retail-system.vercel.app` (or similar).
 
 ---
 
@@ -225,33 +178,27 @@ Expand the **Environment Variables** section and add:
 
 ## 🛠️ Maintenance & Troubleshooting
 
-### 1. Render Free Tier Spin-Down (Cold Start)
-- **Behavior**: On Render's free tier, if no requests are received for 15 minutes, the web service enters sleep mode. The next incoming request takes ~30 to 50 seconds while the container spins up.
-- **Solution (100% Free)**:
-  Use a free uptime monitor like [cron-job.org](https://cron-job.org) or [UptimeRobot](https://uptimerobot.com) to ping your health endpoint every 10 minutes:
-  `GET https://titan-retail-api.onrender.com/api/health`
-  This keeps your backend warm and fast 24/7 at no cost.
-
-### 2. CORS Errors
-- The backend `src/app.js` already includes `cors({ origin: '*' })`, allowing requests from any domain (including your Vercel URL).
-
-### 3. API Returns 404 or Cannot Connect
-- Check the `NEXT_PUBLIC_API_URL` setting in Vercel:
-  - ✅ Correct: `https://titan-retail-api.onrender.com/api`
-  - ❌ Incorrect: `https://titan-retail-api.onrender.com` (missing `/api`)
-  - ❌ Incorrect: `http://localhost:48291/api` (points to local machine)
-- After changing an environment variable in Vercel, trigger a **Redeploy** (**Deployments > ... > Redeploy**) so Next.js embeds the new URL into the client bundle.
-
-### 4. Database Connection Fails (`MongoServerSelectionError`)
+### 1. Database Connection Fails (`MongoServerSelectionError`)
 - Ensure your MongoDB Atlas Network Access has IP `0.0.0.0/0` (Allow from Anywhere).
 - Verify username and password in `MONGODB_URI`. If your password has special characters like `@` or `#`, encode them (e.g. `@` is `%40`).
+
+### 2. Vercel Framework Detection
+- In your Vercel Project settings, ensure the Framework Preset is set to **Services** (under **Settings > Build & Development Settings**).
+- Vercel uses `vercel.json` in the root folder to detect and build both the `backend` (Express) and `frontend` (Next.js) services.
+
+### 3. Adding New Features or Migrations
+- Whenever you push new commits to `main` on GitHub, Vercel will automatically trigger a new deployment for both services simultaneously.
 
 ---
 
 ## 🚀 Summary of URLs & Secrets
 
-Keep a private note of your live URLs:
-- **Frontend App**: `https://<your-project>.vercel.app`
-- **Backend API**: `https://<your-service>.onrender.com`
-- **Health Check**: `https://<your-service>.onrender.com/api/health`
+Keep a private note of your live deployment details:
+- **Unified App URL**: `https://<your-project>.vercel.app`
+- **Backend API Routes**: `https://<your-project>.vercel.app/api/...`
+- **Health Check**: `https://<your-project>.vercel.app/api/health`
 - **MongoDB Atlas**: `https://cloud.mongodb.com`
+- **Database Name**: `retail_inventory`
+- **Default Admin Account**: `admin@titan.com` / `admin123`
+- **Default Manager Account**: `storemanager@titan.com` / `admin123`
+
