@@ -1,0 +1,29 @@
+node_modules/
+out/
+release/
+dist/
+.next/
+*.tsbuildinfo
+*.log
+*.zip
+.DS_Store
+.env
+.env.*
+!.env.example
+*.db
+.dbkey
+*.pre-restore-*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+Thumbs.db
