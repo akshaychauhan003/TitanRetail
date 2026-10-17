@@ -23,6 +23,7 @@ async function connectDB() {
       console.log(`[DB] Attempting connection to configured MONGODB_URI...`);
       await mongoose.connect(uri, {
         serverSelectionTimeoutMS: 4000,
+        dbName: 'retail_inventory',
       });
       console.log(`[DB] Connected successfully to MongoDB at ${uri.split('@').pop()}`);
       return;
