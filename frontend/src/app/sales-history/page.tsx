@@ -216,7 +216,7 @@ export default function SalesHistoryPage() {
         </a>
       </div>
 
-      <div style={{ padding: '20px 28px 28px 28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div className="sales-history-container" style={{ padding: '20px 28px 28px 28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {/* Filter Toolbar */}
         <div
           style={{
@@ -231,7 +231,7 @@ export default function SalesHistoryPage() {
             border: '1px solid var(--border-subtle)',
           }}
         >
-          <div style={{ position: 'relative', minWidth: '280px', flex: '1 1 280px' }}>
+          <div style={{ position: 'relative', minWidth: 'min(100%, 240px)', flex: '1 1 240px' }}>
             <span
               style={{
                 position: 'absolute',
@@ -499,16 +499,19 @@ export default function SalesHistoryPage() {
           }}
         >
           <div
-            className="card card--glass"
+            className="card card--glass modal-receipt-card"
             style={{
               width: '100%',
               maxWidth: '460px',
+              maxHeight: '90vh',
+              overflowY: 'auto',
               borderRadius: '16px',
               border: '1px solid var(--border-subtle)',
-              padding: '28px',
+              padding: '20px 18px',
               backgroundColor: '#ffffff',
               color: '#111827',
               boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
+              boxSizing: 'border-box',
             }}
           >
             <div style={{ textAlign: 'center', borderBottom: '1px dashed #d1d5db', paddingBottom: '16px' }}>
@@ -677,10 +680,13 @@ export default function SalesHistoryPage() {
             style={{
               width: '100%',
               maxWidth: '560px',
+              maxHeight: '90vh',
+              overflowY: 'auto',
               borderRadius: '16px',
               border: '1px solid var(--border-subtle)',
-              padding: '28px',
+              padding: '20px 18px',
               boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
+              boxSizing: 'border-box',
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>

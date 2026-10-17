@@ -141,7 +141,7 @@ export default function InventoryAdjustmentsPage() {
         subtitle="Chronological log of goods received from suppliers (Purchaser), customer sales (Seller), and stock movements"
       />
 
-      <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div className="page-content-padding" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {/* Toolbar */}
         <div
           style={{
@@ -171,7 +171,7 @@ export default function InventoryAdjustmentsPage() {
                 color: 'var(--text-primary)',
                 fontSize: '13px',
                 outline: 'none',
-                minWidth: '220px',
+                minWidth: 'min(100%, 200px)',
               }}
             />
 

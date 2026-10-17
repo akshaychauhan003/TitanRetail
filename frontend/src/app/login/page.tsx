@@ -57,6 +57,7 @@ export default function LoginPage() {
 
   return (
     <div
+      className="login-page-container"
       style={{
         display: 'flex',
         minHeight: '100vh',
@@ -72,6 +73,7 @@ export default function LoginPage() {
     >
       {/* Top Bar with Day / Night Mode Switcher */}
       <div
+        className="login-theme-switcher"
         style={{
           position: 'absolute',
           top: '24px',
@@ -108,7 +110,7 @@ export default function LoginPage() {
       </div>
 
       <div
-        className="card"
+        className="card login-card"
         style={{
           width: '100%',
           maxWidth: '440px',

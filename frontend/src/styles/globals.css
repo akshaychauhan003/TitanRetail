@@ -4221,3 +4221,244 @@ h1, h2, h3, h4, h5, h6 {
   margin-bottom: var(--spacing-md);
 }
 
+/* ============================================================================
+   31. RESPONSIVE DESIGN SYSTEM OVERHAUL — Mobile, Tablet & Desktop
+   ============================================================================ */
+
+/* Global horizontal overflow protection */
+html, body {
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+/* ---- App Shell & Layout ---- */
+.app-shell-root {
+  width: 100% !important;
+  max-width: 100vw !important;
+  overflow-x: hidden !important;
+}
+
+.app-shell-main {
+  flex: 1;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg-primary);
+  min-height: 100vh;
+  margin-left: 0;
+  transition: margin-left 0.32s cubic-bezier(0.2, 0, 0, 1);
+  will-change: margin-left;
+  width: 100%;
+  max-width: 100vw;
+}
+
+@media (min-width: 1024px) {
+  .app-shell-main.app-shell-main--open {
+    margin-left: 260px;
+    width: calc(100% - 260px);
+  }
+}
+
+.sidebar-mobile-backdrop {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .app-shell-main {
+    margin-left: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  .sidebar-mobile-backdrop {
+    display: block !important;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 45;
+    animation: fadeIn 0.2s ease;
+  }
+}
+
+/* ---- Responsive Navbar ---- */
+.site-navbar {
+  padding: 0 24px;
+}
+
+@media (max-width: 768px) {
+  .site-navbar {
+    padding: 0 12px !important;
+    min-height: 56px !important;
+  }
+
+  .site-navbar__title {
+    font-size: 15px !important;
+  }
+
+  .site-navbar__subtitle {
+    display: none !important;
+  }
+
+  .site-navbar__theme-label {
+    display: none !important;
+  }
+
+  .site-navbar__theme-btn {
+    padding: 6px 10px !important;
+  }
+}
+
+/* ---- Page Containers & Padding ---- */
+@media (max-width: 768px) {
+  .dashboard-content,
+  .purchases-page-container,
+  .page-content-padding,
+  .reports-page-container,
+  .settings-page-container,
+  .sales-history-container,
+  .customers-page-main {
+    padding: 14px !important;
+    gap: 16px !important;
+  }
+}
+
+/* ---- Dashboard Grids ---- */
+@media (max-width: 680px) {
+  .dashboard-hubs-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 960px) {
+  .dashboard-charts-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 540px) {
+  .dashboard-freshness-stats {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ---- Sales POS Layout ---- */
+@media (max-width: 960px) {
+  .sales-pos-layout {
+    grid-template-columns: 1fr !important;
+    padding: 14px !important;
+    gap: 16px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .sales-workflow-bar {
+    padding: 12px 14px 0 14px !important;
+  }
+}
+
+@media (max-width: 520px) {
+  .sales-customer-inputs {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sales-discount-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .sales-product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+  }
+}
+
+/* ---- Purchases Layout ---- */
+@media (max-width: 960px) {
+  .purchases-split-layout {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+}
+
+/* ---- Reports & Settings Grids ---- */
+@media (max-width: 960px) {
+  .reports-split-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ---- Modal Forms & Grids ---- */
+@media (max-width: 640px) {
+  .modal-grid-4col {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+
+  .modal-grid-3col {
+    grid-template-columns: 1fr !important;
+  }
+
+  .modal-grid-2col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (max-width: 420px) {
+  .modal-grid-4col {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ---- Modal Container Max Widths on Small Screens ---- */
+@media (max-width: 600px) {
+  div[style*="maxWidth: '480px'"],
+  div[style*="maxWidth: 480px"],
+  div[style*="maxWidth: '520px'"],
+  div[style*="maxWidth: 520px"],
+  div[style*="maxWidth: '560px'"],
+  div[style*="maxWidth: 560px"],
+  div[style*="maxWidth: '600px'"],
+  div[style*="maxWidth: 600px"],
+  div[style*="maxWidth: '640px'"],
+  div[style*="maxWidth: 640px"],
+  div[style*="maxWidth: '700px'"],
+  div[style*="maxWidth: 700px"] {
+    max-width: 94vw !important;
+  }
+}
+
+/* ---- Login Page Responsive ---- */
+@media (max-width: 640px) {
+  .login-page-container {
+    padding: 16px !important;
+    align-items: flex-start !important;
+    padding-top: 64px !important;
+  }
+
+  .login-theme-switcher {
+    top: 14px !important;
+    right: 14px !important;
+  }
+
+  .login-card {
+    padding: 24px 18px !important;
+  }
+}
+
+/* ---- Inputs & Touch Optimization ---- */
+@media (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important; /* Prevents unwanted auto-zooming on iOS devices */
+  }
+
+  button, input[type="button"], input[type="submit"] {
+    min-height: 38px;
+  }
+}
+

@@ -1,5 +1,5 @@
 import '../styles/globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { AuthProvider } from '../context/AuthContext';
 import { ThemeProvider } from '../context/ThemeContext';
 import { NavigationProvider } from '../context/NavigationContext';
@@ -9,6 +9,19 @@ export const metadata: Metadata = {
   title: 'TITAN — Retail Inventory & Sales Management System',
   description:
     'Comprehensive enterprise retail inventory tracking, stock adjustments, POS billing, low-stock alerts, and sales analytics.',
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/favicon.svg',
+  },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
 };
 
 export default function RootLayout({
@@ -19,6 +32,8 @@ export default function RootLayout({
   return (
     <html lang="en" data-theme="light">
       <head>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/favicon.svg" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link

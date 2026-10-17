@@ -257,6 +257,7 @@ export default function SalesPOSPage() {
 
       {/* Workflow Navigation Bar: New Sale POS vs Sales History & Returns */}
       <div
+        className="sales-workflow-bar"
         style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -266,7 +267,7 @@ export default function SalesPOSPage() {
           gap: '12px',
         }}
       >
-        <div style={{ display: 'flex', gap: '8px' }}>
+        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
           <div
             style={{
               display: 'inline-flex',
@@ -302,7 +303,7 @@ export default function SalesPOSPage() {
             }}
           >
             <IconHistory size={16} />
-            <span>Sales History & Returns (Restores Stock)</span>
+            <span>Sales History & Returns</span>
           </Link>
         </div>
 
@@ -328,6 +329,7 @@ export default function SalesPOSPage() {
       </div>
 
       <div
+        className="sales-pos-layout"
         style={{
           flex: 1,
           display: 'grid',
@@ -434,6 +436,7 @@ export default function SalesPOSPage() {
 
           {/* Product Grid */}
           <div
+            className="sales-product-grid"
             style={{
               flex: 1,
               overflowY: 'auto',
@@ -619,7 +622,7 @@ export default function SalesPOSPage() {
               position: 'relative',
             }}
           >
-            <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 1.2fr', gap: '10px' }}>
+            <div className="sales-customer-inputs" style={{ display: 'grid', gridTemplateColumns: '1.1fr 1.2fr', gap: '10px' }}>
               {/* 1. Mobile Number (First) */}
               <div style={{ position: 'relative' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '4px' }}>
@@ -938,7 +941,7 @@ export default function SalesPOSPage() {
             }}
           >
             {/* Discount, Tax & Payment Method Bar */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.2fr', gap: '10px' }}>
+            <div className="sales-discount-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1.2fr', gap: '10px' }}>
               <div>
                 <label style={{ display: 'block', fontSize: '10px', color: 'var(--text-muted)', marginBottom: '3px' }}>
                   Discount (%)
@@ -1250,16 +1253,19 @@ export default function SalesPOSPage() {
           }}
         >
           <div
-            className="card card--glass"
+            className="card card--glass modal-receipt-card"
             style={{
               width: '100%',
               maxWidth: '460px',
+              maxHeight: '90vh',
+              overflowY: 'auto',
               borderRadius: '16px',
               border: '1px solid var(--border-subtle)',
-              padding: '28px',
+              padding: '20px 18px',
               backgroundColor: '#ffffff',
               color: '#111827',
               boxShadow: '0 24px 48px rgba(0,0,0,0.5)',
+              boxSizing: 'border-box',
             }}
           >
             {/* Receipt Header */}

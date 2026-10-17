@@ -418,7 +418,7 @@ export default function DashboardPage() {
         subtitle={`Welcome, ${user?.name || 'Store Manager'} • TITAN Retail Operations`}
       />
 
-      <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div className="dashboard-content" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {/* Top Notification / Success Alert */}
         {addSuccessMsg && (
           <div
@@ -441,7 +441,7 @@ export default function DashboardPage() {
         )}
 
         {/* TWO PRIMARY HUBS: SELLER & PURCHASER (CRYSTAL CLEAR) */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
+        <div className="dashboard-hubs-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '16px' }}>
           {/* 1. SELLER PORTAL */}
           <Link
             href="/sales"
@@ -881,7 +881,7 @@ export default function DashboardPage() {
         {/* ========================================================
             GRAPHS & CHARTS SECTION
             ======================================================== */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))', gap: '20px' }}>
+        <div className="dashboard-charts-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(460px, 1fr))', gap: '20px' }}>
           {/* Chart 1: Seller vs Purchaser Trend */}
           <div
             className="card"
@@ -1093,6 +1093,7 @@ export default function DashboardPage() {
             >
               {/* Freshness 3-Column Stats Grid */}
               <div
+                className="dashboard-freshness-stats"
                 style={{
                   display: 'grid',
                   gridTemplateColumns: 'repeat(3, 1fr)',

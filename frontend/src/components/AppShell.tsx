@@ -8,7 +8,7 @@ import LoginPage from '../app/login/page';
 
 export function AppShell({ children }: { children: React.ReactNode }) {
   const { user, token, loading } = useAuth();
-  const { isOpen } = useNavigation();
+  const { isOpen, closeSidebar } = useNavigation();
 
   if (loading) {
     return (
@@ -56,6 +56,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div
+      className="app-shell-root"
       style={{
         display: 'flex',
         width: '100%',
@@ -66,20 +67,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       }}
     >
       <Sidebar />
-      <main
-        style={{
-          flex: 1,
-          minWidth: 0,
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-          backgroundColor: 'var(--bg-primary)',
-          minHeight: '100vh',
-          marginLeft: isOpen ? '260px' : '0px',
-          transition: 'margin-left 0.32s cubic-bezier(0.2, 0, 0, 1)',
-          willChange: 'margin-left',
-        }}
-      >
+      {/* Mobile Backdrop when Sidebar drawer is active */}
+      {isOpen && (
+        <div
+          className="sidebar-mobile-backdrop"
+          onClick={closeSidebar}
+          aria-label="Close navigation overlay"
+          role="button"
+          tabIndex={0}
+        />
+      )}
+      <main className={`app-shell-main ${isOpen ? 'app-shell-main--open' : ''}`}>
         {children}
       </main>
     </div>

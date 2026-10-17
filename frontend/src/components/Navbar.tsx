@@ -16,9 +16,9 @@ export function Navbar({ title, subtitle }: NavbarProps) {
 
   return (
     <header
+      className="site-navbar"
       style={{
-        height: '64px',
-        padding: '0 24px',
+        minHeight: '60px',
         borderBottom: '1px solid var(--border-subtle)',
         backgroundColor: 'var(--bg-glass)',
         backdropFilter: 'blur(12px)',
@@ -28,9 +28,10 @@ export function Navbar({ title, subtitle }: NavbarProps) {
         position: 'sticky',
         top: 0,
         zIndex: 40,
+        gap: '12px',
       }}
     >
-      <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px', minWidth: 0, flex: 1 }}>
         {/* Toggle Sidebar Button */}
         <button
           type="button"
@@ -50,6 +51,7 @@ export function Navbar({ title, subtitle }: NavbarProps) {
             cursor: 'pointer',
             transition: 'all 0.2s ease',
             boxShadow: isOpen ? 'none' : '0 2px 8px var(--accent-glow)',
+            flexShrink: 0,
           }}
           onMouseEnter={(e) => {
             if (isOpen) {
@@ -65,26 +67,31 @@ export function Navbar({ title, subtitle }: NavbarProps) {
           <IconMenu size={20} />
         </button>
 
-        <div>
+        <div style={{ minWidth: 0, flex: 1 }}>
           <h1
+            className="site-navbar__title"
             style={{
-              fontSize: '18px',
+              fontSize: '17px',
               fontWeight: 700,
               color: 'var(--text-primary)',
               margin: 0,
-              display: 'flex',
-              alignItems: 'center',
-              gap: '8px',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
             }}
           >
             {title || 'Retail Dashboard'}
           </h1>
           {subtitle && (
             <p
+              className="site-navbar__subtitle"
               style={{
                 fontSize: '12px',
                 color: 'var(--text-muted)',
                 margin: '2px 0 0',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
               }}
             >
               {subtitle}
@@ -93,17 +100,18 @@ export function Navbar({ title, subtitle }: NavbarProps) {
         </div>
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
         {/* Day / Night Mode Toggle */}
         <button
           type="button"
           onClick={toggleTheme}
           title={`Switch to ${isDark ? 'Day' : 'Night'} Mode`}
+          className="site-navbar__theme-btn"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '6px',
-            padding: '7px 14px',
+            padding: '7px 12px',
             backgroundColor: 'var(--bg-tertiary)',
             color: 'var(--text-primary)',
             border: '1px solid var(--border-subtle)',
@@ -112,10 +120,11 @@ export function Navbar({ title, subtitle }: NavbarProps) {
             fontWeight: 600,
             cursor: 'pointer',
             transition: 'all 0.2s ease',
+            flexShrink: 0,
           }}
         >
           <span style={{ fontSize: '15px' }}>{isDark ? '☀️' : '🌙'}</span>
-          <span>{isDark ? 'Day Mode' : 'Night Mode'}</span>
+          <span className="site-navbar__theme-label">{isDark ? 'Day' : 'Night'}</span>
         </button>
       </div>
     </header>

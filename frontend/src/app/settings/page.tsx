@@ -76,7 +76,7 @@ export default function SettingsPage() {
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: 'var(--bg-primary)' }}>
       <Navbar title="System Settings" subtitle="Account credentials, navigation preferences & display configuration" />
 
-      <div style={{ padding: '32px 36px', maxWidth: '1100px', width: '100%', boxSizing: 'border-box' }}>
+      <div className="settings-page-container" style={{ padding: '32px 36px', maxWidth: '1100px', width: '100%', boxSizing: 'border-box' }}>
         {/* Page Header */}
         <div style={{ marginBottom: '28px' }}>
           <h2 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 6px' }}>
@@ -87,7 +87,7 @@ export default function SettingsPage() {
           </p>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
+        <div className="settings-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '24px' }}>
           {/* Card 1: User ID & Password (Store Manager) */}
           <div
             style={{

@@ -358,6 +358,7 @@ export default function CustomersPage() {
       <Navbar />
 
       <main
+        className="customers-page-main"
         style={{
           maxWidth: '1440px',
           margin: '0 auto',

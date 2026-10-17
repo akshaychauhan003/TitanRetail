@@ -500,7 +500,7 @@ export default function PurchasesPage() {
         subtitle="Buy goods from suppliers, choose category first, select products from list, and manage vendors"
       />
 
-      <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div className="purchases-page-container" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {/* Navigation Breadcrumb / Role Notice */}
         <div
           style={{
@@ -511,9 +511,11 @@ export default function PurchasesPage() {
             padding: '14px 20px',
             borderRadius: '12px',
             border: '1px solid var(--border-color)',
+            flexWrap: 'wrap',
+            gap: '10px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
             <span
               style={{
                 padding: '4px 10px',
@@ -633,7 +635,7 @@ export default function PurchasesPage() {
         </div>
 
         {/* 2-Column Layout: Inward Entry Form & Inward Purchase Register */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '24px' }}>
+        <div className="purchases-split-layout" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(440px, 1fr))', gap: '24px' }}>
           {/* Purchaser Form: Receive Stock Inward */}
           <div
             className="card"

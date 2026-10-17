@@ -101,7 +101,7 @@ export default function ReportsPage() {
         subtitle="Gross revenue, Cost of Goods Sold (COGS), profit margins, category breakdowns, and CSV export"
       />
 
-      <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div className="reports-page-container" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {/* Date Filter & Export Toolbar */}
         <div
           style={{
@@ -312,7 +312,7 @@ export default function ReportsPage() {
         </div>
 
         {/* 2-Column Split: Sales Timeline & Category Revenue */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '20px' }}>
+        <div className="reports-split-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(380px, 1fr))', gap: '20px' }}>
           {/* Timeline Breakdown */}
           <div
             className="card card--glass"

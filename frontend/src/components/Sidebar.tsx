@@ -61,11 +61,18 @@ export function Sidebar() {
     closeSidebar();
   };
 
-  // Cursor moving near left edge of page (<= 28px) opens navigation from left side
+  const handleNavClick = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+      closeSidebar();
+    }
+  };
+
+  // Cursor moving near left edge of page (<= 28px) opens navigation from left side (desktop only)
   useEffect(() => {
     if (isOpen) return;
 
     const handleMouseMove = (e: MouseEvent) => {
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) return;
       // Cooldown check after user clicks close button
       if (Date.now() - lastClosedTimeRef.current < 450) return;
 
@@ -97,6 +104,7 @@ export function Sidebar() {
         style={{
           width: '260px',
           minWidth: '260px',
+          maxWidth: '85vw',
           height: '100vh',
           backgroundColor: 'var(--bg-secondary)',
           borderRight: '1px solid var(--border-subtle)',
@@ -113,7 +121,7 @@ export function Sidebar() {
           boxShadow: isOpen
             ? isPinned
               ? '1px 0 0 var(--border-subtle)'
-              : '4px 0 24px rgba(0, 0, 0, 0.15)'
+              : '4px 0 24px rgba(0, 0, 0, 0.25)'
             : 'none',
           pointerEvents: isOpen ? 'auto' : 'none',
           willChange: 'transform',
@@ -251,6 +259,7 @@ export function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={handleNavClick}
               style={{
                 display: 'flex',
                 alignItems: 'center',

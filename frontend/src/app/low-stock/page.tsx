@@ -87,7 +87,7 @@ export default function LowStockPage() {
         subtitle="Dedicated replenishment monitor for inventory at or below configured reorder thresholds"
       />
 
-      <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
+      <div className="page-content-padding" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '24px' }}>
         {/* Summary Stat Cards */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '16px' }}>
           <div

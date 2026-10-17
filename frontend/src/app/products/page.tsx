@@ -552,7 +552,7 @@ export default function ProductsPage() {
         subtitle="Manage product SKUs, stock levels, categories, shelf life, and expiry tracking"
       />
 
-      <div style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
+      <div className="page-content-padding" style={{ padding: '28px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
         {/* Filter and Action Toolbar */}
         <div
           style={{
@@ -1121,7 +1121,7 @@ export default function ProductsPage() {
               </div>
 
               {/* 3. SKU Code & Kind of Product */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
+              <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                     SKU Code *
@@ -1206,7 +1206,7 @@ export default function ProductsPage() {
               )}
 
               {/* Pricing & Stock */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
+              <div className="modal-grid-4col" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '12px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                     Cost Price (₹) *
@@ -1325,7 +1325,7 @@ export default function ProductsPage() {
                   </div>
                 </div>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.2fr 1.2fr', gap: '12px' }}>
+                <div className="modal-grid-3col" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.2fr 1.2fr', gap: '12px' }}>
                   {/* DOM */}
                   <div>
                     <label style={{ display: 'block', fontSize: '11px', fontWeight: 600, color: 'var(--text-muted)', marginBottom: '4px' }}>
@@ -1466,7 +1466,7 @@ export default function ProductsPage() {
               </div>
 
               {/* Unit & Description */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '14px' }}>
+              <div className="modal-grid-2col" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '14px' }}>
                 <div>
                   <label style={{ display: 'block', fontSize: '12px', fontWeight: 600, color: 'var(--text-secondary)', marginBottom: '6px' }}>
                     Package Unit *

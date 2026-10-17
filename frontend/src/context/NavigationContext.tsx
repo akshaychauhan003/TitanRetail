@@ -71,20 +71,26 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     isPinnedRef.current = isPinned;
   }, [isPinned]);
 
-  // Load preferences from localStorage on mount
+  // Load preferences from localStorage on mount with mobile responsiveness check
   useEffect(() => {
     try {
-      const savedPinned = localStorage.getItem('titan_nav_pinned');
-      if (savedPinned === 'false') {
+      const isMobile = window.innerWidth < 1024;
+      if (isMobile) {
         setIsPinnedState(false);
-        const savedOpen = localStorage.getItem('titan_nav_open');
-        if (savedOpen === 'false') {
-          setIsOpen(false);
-        }
+        setIsOpen(false);
       } else {
-        // Defaults to pinned & open
-        setIsPinnedState(true);
-        setIsOpen(true);
+        const savedPinned = localStorage.getItem('titan_nav_pinned');
+        if (savedPinned === 'false') {
+          setIsPinnedState(false);
+          const savedOpen = localStorage.getItem('titan_nav_open');
+          if (savedOpen === 'false') {
+            setIsOpen(false);
+          }
+        } else {
+          // Defaults to pinned & open on desktop
+          setIsPinnedState(true);
+          setIsOpen(true);
+        }
       }
 
       const savedAutoClose = localStorage.getItem('titan_nav_autoclose');
@@ -94,6 +100,14 @@ export function NavigationProvider({ children }: { children: React.ReactNode }) 
     } catch (e) {
       // localStorage may fail in restricted/private modes
     }
+
+    const handleResize = () => {
+      if (window.innerWidth < 1024 && isPinnedRef.current) {
+        setIsPinnedState(false);
+      }
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const clearTimer = useCallback(() => {
